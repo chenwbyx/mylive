@@ -1,0 +1,185 @@
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台管理</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style_admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/select_admin.css') }}">
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery_admin.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.idTabs.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/select-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/kindeditor.js') }}"></script>
+    <script type="text/javascript">
+    KE.show({
+        id : 'content7',
+        cssPath : './index.css'
+    });
+    </script>
+    <script type="text/javascript">
+        var flag={{ flag_addfile | default('0') }}
+        if(flag==1)
+            alert("发布成功！");
+    </script>
+    <script type="text/javascript">
+        var flag={{ flag_deletefile | default('0') }}
+        if(flag==1)
+            alert("删除成功！");
+    </script>
+    <script type="text/javascript">
+        var flag={{ flag_revisesucceed | default('0') }}
+        if(flag==1)
+            alert("修改成功！");
+    </script>
+    <script type="text/javascript">
+        var flag={{ flag_photofile | default('0') }}
+        if(flag==1)
+            alert("请上传合法文件！");
+    </script>
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $(".select1").uedSelect({
+		width : 345			  
+	});
+	$(".select2").uedSelect({
+		width : 167  
+	});
+	$(".select3").uedSelect({
+		width : 100
+	});
+});
+</script>
+</head>
+
+<body>
+
+	<div class="place">
+        <span>位置：</span>
+            <ul class="placeul">
+                <li><a href="#">首页</a></li>
+                <li><a href="{{ url_for('admin') }}">系统管理</a></li>
+
+            </ul>
+        <span><p style="text-align: right"><a href="{{ url_for('logout') }}"><font color="red">注销</font></a></p></span>
+    </div>
+    
+    <div class="formbody">
+    
+    
+    <div id="usual1" class="usual"> 
+    
+    <div class="itab">
+  	<ul> 
+    <li><a href="#tab1" class="selected">编辑/发布通知</a></li>
+    <li><a href="#tab2">查看/管理直播</a></li>
+  	</ul>
+    </div> 
+    
+  	<div id="tab1" class="tabson">
+    
+        <div class="formtext">
+            Hi，<b>admin</b>，欢迎您试用信息编辑/发布功能！
+            {% if flag_revisefile %}
+                编辑并修改编号为<b>{{ flag_revisefile }}</b>的直播
+            {% endif %}
+        </div>
+        <ul class="forminfo">
+            <form action="{{ url_for('add') }}" enctype="multipart/form-data" method="post">
+                <li>
+                    <label>发布文字<b>*</b></label>
+                    <textarea name="content" placeholder="请输入内容" id=""  rows="20" class="dfinput" value="请填写发布信息"  style="width:518px;">
+                        {% if mydata_tmp!='NULL' %}
+                            {{ mydata_tmp.content }}
+                        {% endif %}
+                    </textarea>
+                </li>
+                <li><label>上传图片</label>
+                  <div class="form-group">
+                    <label for="exampleInputFile">选择上传文件:</label>
+                    <input name="file" type="file" id="InputFile">
+                  </div>
+                </li>
+                <li>
+                    <label>是否加入直播摘要</label>
+                    <div class="usercity">
+                        <div class="cityleft">
+                            <select class="select2" name="sub_flag">
+                                <option value=0>否</option>
+                                <option value=1>是</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                {% if mydata_tmp!='NULL' %}
+                    <li>
+                        <label>是否覆盖原内容</label>
+                        <div class="usercity">
+                        <div class="cityleft">
+                            <select class="select2" name="revise_flag">
+                                <option value={{ mydata_tmp.id }}>是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                    </div>
+                    </li>
+                {% else %}
+                    <li>
+                        <label>是否立刻发布</label>
+                        <div class="usercity">
+                        <div class="cityleft">
+                            <select class="select2" name="revise_flag">
+                                <option value="0">是</option>
+                            </select>
+                        </div>
+                    </div>
+                    </li>
+                {% endif %}
+                <li>
+                    <label>&nbsp;</label>
+                    <input name=""  type="submit" class="btn" value="马上发布"/>
+                </li>
+            </form>
+        </ul>
+
+        </div>
+        <div id="tab2" class="tabson">
+        <table class="tablelist">
+            <thead>
+            <tr>
+                <th width="100px">编号<i class="sort"><img src="{{ url_for('static',filename='images/px.gif') }}" /></i></th>
+                <th width="100px;">缩略图</th>
+                <th>内容</th>
+                <th width="220px">发布时间</th>
+                <th width="170px">是否加入摘要</th>
+                <th width="130px">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for mydata in Mydata %}
+                    <tr>
+                    <td>{{ mydata.id }}</td>
+                    <td class="imgtd">
+                        {% if mydata.photo_path !='' %}
+                            <img src="{{ url_for('static',filename='images/'+mydata.photo_path) }}"height="60" width="80"/>
+                        {% endif %}
+                    </td>
+                    <td>{{ mydata.content }}</td>
+                    <td>{{ mydata.create_time.strftime('%Y-%m-%d  %H:%M') }}</td>
+                    <td>{{ mydata.flag }}</td>
+                    <td><a href="{{ url_for('revise',id = mydata.id) }}" class="tablelink">修改</a>     <a href="{{ url_for('delete',id=mydata.id) }}" class="tablelink"> 删除</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            <div class="pagin">
+            <div class="message">共<i class="blue">{{ n_Mydata }}</i>条记录</div>
+        </div>
+        </div>
+        </div>
+        <script type="text/javascript">
+          $("#usual1 ul").idTabs();
+        </script>
+        <script type="text/javascript">
+        $('.tablelist tbody tr:odd').addClass('odd');
+        </script>
+    </div>
+</body>
+</html>

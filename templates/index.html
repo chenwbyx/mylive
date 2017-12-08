@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+        <meta http-equiv="refresh" content="40">
+		<link rel="icon" href="favicon.ico">
+		<title>河南省第三届信息安全与攻防技术大赛</title>
+		<!-- Bootstrap core CSS -->
+		<link href="static/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<!-- Custom styles for this template -->
+		<link href="static/css/jquery.bxslider.css" rel="stylesheet">
+		<link href="static/css/hezi.css" rel="stylesheet">
+		<link href="static/css/style.css" rel="stylesheet">
+
+	</head>
+<body style="background-color: #f2f2f2;">
+<div  class="top" style="width: 100%; height: 300px; margin-top: 0; background: url(static/images/123.jpg);" >
+			<!--<img src="images/123.jpg" title="Funky roots" width="100%" height="200px" />-->
+			<h2>西普杯2017年郑州市首届高校网络安全技能赛</h2>
+            <h2>图文直播平台</h2>
+</div>
+<div class="col-md-8" style="background-color: #fff; margin-top: 2%;">
+    {% for mydata in Mydata %}
+        <div class="post-head" id="cont{{ mydata.id }}">
+            <div class="post-meta">
+                <h2 style="text-align:left; font-size: 15px" name="time">{{ mydata.create_time.strftime('%Y-%m-%d  %H:%M') }}</h2>
+            </div>
+        </div>
+        <div class="featured-media">
+            <a href="javascript:">
+                {% if mydata.photo_path %}
+                    <img src="{{ url_for('static',filename='images/'+mydata.photo_path) }}"/>
+                {% endif %}
+            </a>
+            <div class="post-title"><p style="text-align:left;">{{ mydata.content }}</p></div>
+        </div>
+    {% endfor %}
+    <div class="qidai"><p>内容已经全部加载完毕，敬请期待更多精彩内容....</p></div>
+</div>
+
+
+
+
+<div class="col-md-3 sidebar-gutter" style="margin-top: 2%; background-color: #fff; margin-left: 30px;">
+
+					<div class="sidebar-widget">
+						<h3 class="sidebar-title">直播摘要</h3>
+						<ul>
+                            {% for mydata in Mydata %}
+                                {% if mydata.flag %}
+                                    <li><a href="#cont{{ mydata.id }}">{{ mydata.content[0:10] }}......</a></li>
+                                {% endif %}
+                            {% endfor %}
+						</ul>
+					</div>
+			</div>
+
+	</div><!-- /.container -->
+
+		<footer class="footer col-md-12">
+			<div class="footer-bottom">
+                <p>联系方式：12345678900</p>
+                <p>具体地址：中原工学院南校区8#513</p>
+				<i class="fa fa-copyright"></i> 2017.12<br>
+				中原工学院HNCTF大赛
+			</div>
+		</footer>
+
+		<!-- Bootstrap core JavaScript
+			================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+
+	<!--<script src="js/jquery.js"></script>-->
+
+	<script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/jquery.bxslider.js"></script>
+    <script src="static/js/mooz.scripts.min.js"></script>
+
+
+    <!--<script type="text/javascript" src="js/test.js"></script>-->
+	<script src="static/js/main.js"></script>
+</body>
+</html>
