@@ -7,7 +7,7 @@
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<meta name="description" content="">
 		<meta name="author" content="">
-        <meta http-equiv="refresh" content="40">
+        <meta http-equiv="refresh" content="30">
 		<link rel="icon" href="favicon.ico">
 		<title>河南省第三届信息安全与攻防技术大赛</title>
 		<!-- Bootstrap core CSS -->
@@ -17,7 +17,6 @@
 		<link href="static/css/jquery.bxslider.css" rel="stylesheet">
 		<link href="static/css/hezi.css" rel="stylesheet">
 		<link href="static/css/style.css" rel="stylesheet">
-
 	</head>
 <body style="background-color: #f2f2f2;">
 <div  class="top" style="width: 100%; height: 300px; margin-top: 0; background: url(static/images/123.jpg);" >
@@ -33,11 +32,9 @@
             </div>
         </div>
         <div class="featured-media">
-            <a href="javascript:">
                 {% if mydata.photo_path %}
-                    <img src="{{ url_for('static',filename='images/'+mydata.photo_path) }}"/>
+                    <img data-echo="{{ url_for('static',filename='images/'+mydata.photo_path)}}" src="{{ url_for('static',filename='images/loading.gif')}}"/>
                 {% endif %}
-            </a>
             <div class="post-title"><p style="text-align:left;">{{ mydata.content }}</p></div>
         </div>
     {% endfor %}
@@ -83,8 +80,14 @@
     <script src="static/js/jquery.bxslider.js"></script>
     <script src="static/js/mooz.scripts.min.js"></script>
 
-
     <!--<script type="text/javascript" src="js/test.js"></script>-->
 	<script src="static/js/main.js"></script>
+    <script src="static/js/echo.min.js"></script>
+	<script type="text/javascript">
+	Echo.init({
+	offset: 0,
+	throttle: 0
+	});
+	</script>
 </body>
 </html>
