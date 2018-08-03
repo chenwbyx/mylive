@@ -26,8 +26,16 @@
 	```python
 	python manage.py db upgrade
 	```
+
+
+启动方法
+---
+* 进入项目目录，命令
+	```shell
+	python Live.py
+	```
+
   
-  
-  后台管理页面
-  ---
-  * /login，测试账号：admin；密码：dropsxyz
+后台管理页面
+---
+* /login，测试账号：admin；密码：dropsxyz
