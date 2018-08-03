@@ -1,11 +1,11 @@
 基于Python/Flask的图文直播平台
 ===
->Design by chenwenbo
+>Design and maintenance by chenwenbo
 * Python 3.6.5
 * Flask 1.0.2
 * MySQL 5.7.14
 * 其他包：
-  * pymysql
+	* pymysql
 	* flask-sqlalchemy
 	* flask_script
 	* flask_migrate
