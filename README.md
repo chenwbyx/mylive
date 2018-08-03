@@ -1,6 +1,6 @@
 基于Python/Flask的图文直播平台
 ===
->Design and maintenance by chenwenbo
+>Design and maintenance by chenwenbo.
 * Python 3.6.5
 * Flask 1.0.2
 * MySQL 5.7.14
